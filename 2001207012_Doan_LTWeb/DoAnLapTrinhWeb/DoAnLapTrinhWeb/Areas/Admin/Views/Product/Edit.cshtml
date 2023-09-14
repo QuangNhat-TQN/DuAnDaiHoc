@@ -1,0 +1,40 @@
+﻿@model DoAnLapTrinhWeb.Models.Product
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Sửa sản phẩm</h2>
+@using (Html.BeginForm("Edit", "Product", new { area = "admin" ,ProductID = Model.ProductID},
+    FormMethod.Post, new { enctype = "multipart/dorm-data" }))
+{
+<div class="row">
+    <input type="hidden" name="Id" value="@Model.ProductID" />
+    <div class="col-md-6">
+        @Html.LabelFor(row => row.ProductName)
+        @Html.TextBoxFor(row => row.ProductName,
+       new { @class = "form-control", placeholder = "Product Name" })
+    </div>
+    <div class="col-md-6">
+        @Html.LabelFor(row => row.Price)
+        @Html.TextBoxFor(row => row.Price,
+       new { @class = "form-control", placeholder = "Price" })
+        @Html.ValidationMessageFor(row => row.Price)
+    </div>
+    <div class="col-md-6">
+        <input type="file" class="form-control" placeholder="Img" name="Img">
+    </div>
+    <div class="col-md-6">
+        @Html.DropDownListFor(row => row.CategoryID, new SelectList(@ViewBag.Category, "CategoryID", "CategoryName"),
+       "Chọn thể loại", new { @class = "form-control" })
+        @Html.ValidationMessageFor(row => row.CategoryID)
+    </div>
+    <div class="col-md-6">
+        @Html.LabelFor(row => row.Trend)
+        @Html.TextBoxFor(row => row.Trend,
+       new { @class = "form-control", placeholder = "Trend" })
+    </div>
+</div>
+    @Html.ValidationSummary()
+    <button type="submit" class="btn btn-success">Edit</button>
+    <a href="/admin/product/index">Cancel</a>
+}

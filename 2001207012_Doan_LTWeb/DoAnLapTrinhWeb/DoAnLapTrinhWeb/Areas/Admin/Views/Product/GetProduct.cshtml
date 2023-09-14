@@ -1,0 +1,47 @@
+﻿@model List<DoAnLapTrinhWeb.Models.Product>
+@{
+    ViewBag.Title = "GetProduct";
+}
+
+<h2>GetProduct</h2>
+<button type="button" id="btnGetProducts">Get Products</button>
+<table class="table productTable">
+    <thead>
+        <tr>
+            <th scope="col">
+                ID
+            </th>
+            <th scope="col">
+                Name
+            </th>
+            <th scope="col">
+                Price
+            </th>
+            <th scope="col">
+                Category
+            </th>
+            <th scope="col">
+                Img
+            </th>
+            <th scope="col">
+                Trend
+            </th>
+        </tr>
+    </thead>
+</table>
+    <script>
+        $('#btnGetProducts').click(() => {
+            $.ajax({
+                type: 'GET',
+                url: '/api/product',
+                success: (responses) => {
+                    for (var i = 0; i <= responses.length; i++) {
+                        const productRow = responses[i]
+                        const strHTML = '<tr><td>' + productRow.ProductID + '</td><td>' + productRow.ProductName + '</td><td>' + productRow.Price + '</td><td>' + productRow.Img + '</td><td>' + productRow.CategoryID + '</td><td>' + productRow.Trend + '</td></tr>';
+                        $('.productTable').append(strHTML);
+                    }
+                },
+                error: (err) => { console.log(err); }
+            })
+        })
+    </script>

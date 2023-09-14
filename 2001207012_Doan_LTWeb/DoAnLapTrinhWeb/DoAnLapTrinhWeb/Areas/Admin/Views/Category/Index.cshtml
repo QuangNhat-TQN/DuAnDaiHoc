@@ -1,0 +1,83 @@
+﻿@model List<DoAnLapTrinhWeb.Models.Category>
+@{
+    ViewBag.Title = "Category";
+}
+
+<label>Sắp xếp theo:</label>
+<select id="sort" name="sort">
+    <option value="" selected>Chọn:</option>
+    <option value="MatDinh">Mặt định</option>
+    <option value="IdTangDan">Id thấp đến cao</option>
+    <option value="IdGiamDan">Id cao xuống thấp</option>
+    <option value="TenTangDan">Tên thấp đến cao</option>
+    <option value="TenGiamDan">Tên cao xuống thấp</option>
+</select>
+<a href="/admin/category/create" class="btn btn-primary">Thêm mới 1 thể loại</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                ID
+            </th>
+            <th scope="col">
+                Name
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+<tr>
+    <th>@Html.DisplayFor(row => item.CategoryID)</th>
+    <th>@Html.DisplayFor(row => item.CategoryName)</th>
+    <th scope="col"> <a href="/admin/category/edit/@item.CategoryID">Edit</a></th>
+    <th scope="col"> <a href="/admin/category/delete/@item.CategoryID">Delete</a></th>
+</tr>
+}
+
+    <tr>
+        <td colspan="9">
+            @{
+                int PrevPage = ViewBag.page - 1;
+                if (PrevPage <= 0)
+                {
+                    PrevPage = 1;
+                }
+                int NextPage = ViewBag.page + 1;
+                if (NextPage > ViewBag.NoOfPage)
+                {
+                    NextPage = ViewBag.NoOfPage;
+                }
+            }
+            <ul class=" pagination justify-content-center">
+                <li class=" page-item">
+                    <a class="page-link" href="/admin/category/index?sort=@ViewBag.sort&page=@PrevPage">Prev</a>
+                </li>
+                @for (int i = 0; i < ViewBag.NoOfPage; i++)
+                {
+                    if (i + 1 == ViewBag.page)
+                    {
+                        <li class=" page-item active">
+                            <a class="page-link" href="/admin/category/index?sort=@ViewBag.sort&page=@(i+1)">@(i + 1)</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class=" page-item">
+                            <a class="page-link" href="/admin/category/index?sort=@ViewBag.sort&page=@(i+1)">@(i + 1)</a>
+                        </li>
+                    }
+                }
+                <li class=" page-item active">
+                    <a class="page-link" href="/admin/category/index?sort=@ViewBag.sort&page=@NextPage">Next</a>
+                </li>
+            </ul>
+        </td>
+    </tr>
+
+</table>
+<script>
+    $('#sort').change(function () {
+        const value = $('#sort').val();
+        window.location.href = "/admin/category/index?sort=" + value+"&search=@ViewBag.search";
+    });
+</script>

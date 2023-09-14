@@ -1,0 +1,22 @@
+﻿@model DoAnLapTrinhWeb.Models.Category
+@{
+    ViewBag.Title = "Create Category";
+}
+
+<h2>Thêm sản phẩm</h2>
+
+@using (Html.BeginForm("Insert", "Category", new { area = "admin" },
+    FormMethod.Post, new { enctype = "multipart/dorm-data" }))
+{
+    <div class="row">
+        <div class="col-md-6">
+            @Html.LabelFor(row => row.CategoryName)
+            @Html.TextBoxFor(row => row.CategoryName,
+           new { @class = "form-control", placeholder = "Category Name" })
+        </div>
+    </div>
+    @Html.ValidationSummary()
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="/admin/category/index">Cancel</a>
+}
+

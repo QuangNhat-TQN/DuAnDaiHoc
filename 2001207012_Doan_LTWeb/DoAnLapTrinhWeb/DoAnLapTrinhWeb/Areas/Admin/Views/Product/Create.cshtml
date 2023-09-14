@@ -1,0 +1,41 @@
+﻿@model DoAnLapTrinhWeb.Models.Product
+@{
+    ViewBag.Title = "Create Product";
+}
+
+<h2>Thêm sản phẩm</h2>
+
+@using (Html.BeginForm("Insert", "Product", new { area = "admin" },
+    FormMethod.Post, new { enctype = "multipart/dorm-data" }))
+{
+<div class="row">
+    <div class="col-md-6">
+        @Html.LabelFor(row => row.ProductName)
+        @Html.TextBoxFor(row => row.ProductName,
+       new { @class = "form-control", placeholder = "Product Name" })
+    </div>
+    <div class="col-md-6">
+        @Html.LabelFor(row => row.Price)
+        @Html.TextBoxFor(row => row.Price,
+       new { @class = "form-control", placeholder = "Price" })
+        @Html.ValidationMessageFor(row => row.Price)
+    </div>
+    <div class="col-md-6">
+        <input type="file" class="form-control" placeholder="Img" name="Img">
+    </div>
+    <div class="col-md-6">
+        @Html.DropDownListFor(row => row.CategoryID, new SelectList(@ViewBag.Category, "CategoryID", "CategoryName"),
+       "Chọn thể loại", new { @class = "form-control" })
+        @Html.ValidationMessageFor(row => row.CategoryID)
+    </div>
+    <div class="col-md-6">
+        @Html.LabelFor(row => row.Trend)
+        @Html.TextBoxFor(row => row.Trend,
+       new { @class = "form-control", placeholder = "Trend" })
+    </div>
+</div>
+    @Html.ValidationSummary()
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="/admin/product/index">Cancel</a>
+}
+

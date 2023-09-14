@@ -1,0 +1,38 @@
+﻿@model List<DoAnLapTrinhWeb.Identity.AppUser>
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Danh sách các User</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">
+                User Name
+            </th>
+            <th scope="col">
+                Email
+            </th>
+            <th scope="col">
+                Mobile
+            </th>
+            <th scope="col">
+                City
+            </th>
+            <th scope="col">
+                Date of Birth
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.UserName</th>
+            <th>@item.Email</th>
+            <th>@item.PhoneNumber</th>
+            <th>@item.City</th>
+            <th>@item.Birthday</th>
+        </tr>
+    }
+</table>

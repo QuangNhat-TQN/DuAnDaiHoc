@@ -1,0 +1,21 @@
+﻿@model DoAnLapTrinhWeb.Models.Category
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Sửa thể loại</h2>
+@using (Html.BeginForm("Edit", "Category", new { area = "admin", CategoryID = Model.CategoryID },
+    FormMethod.Post, new { enctype = "multipart/dorm-data" }))
+{
+    <div class="row">
+        <input type="hidden" name="CategoryID" value="@Model.CategoryID" />
+        <div class="col-md-6">
+            @Html.LabelFor(row => row.CategoryName)
+            @Html.TextBoxFor(row => row.CategoryName,
+           new { @class = "form-control", placeholder = "Product Name" })
+        </div>
+    </div>
+    @Html.ValidationSummary()
+    <button type="submit" class="btn btn-success">Edit</button>
+    <a href="/admin/category/index">Cancel</a>
+}

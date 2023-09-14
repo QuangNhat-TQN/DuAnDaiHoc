@@ -1,0 +1,57 @@
+﻿@model List<DoAnLapTrinhWeb.Models.Product>
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Sản phẩm</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="/Home/index">Trang chủ</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Sản phẩm</p>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<label>Sắp xếp theo:</label>
+<select id="sort" name="sort">
+    <option value="" selected>Giá</option>
+    <option value="TangDan">Giá: Thấp đến cao</option>
+    <option value="GiamDan">Giá: Cao xuống thấp</option>
+</select>
+<div class="container-fluid pt-5">
+
+    <div class="row px-xl-5 pb-3">
+        @foreach (var pro in Model.Where(item => item.Trend == 1).Take(8))
+        {
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="~/img/@pro.Img" alt="@pro.Img">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">@pro.ProductName</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>@pro.Price VND</h6><h6 class="text-muted ml-2"></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Xem chi tiết</a>
+                        <a href="@Url.Action("ThemVaoGio", "Cart", new { sanPhamID = pro.ProductID })" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Thêm vào giỏ</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+<!-- Products End -->
+<script>
+    $('#sort').change(function () {
+        const value = $('#sort').val();
+        window.location.href = "/product/loctheochude/@ViewBag.id?sort=" + value;
+    });
+</script>

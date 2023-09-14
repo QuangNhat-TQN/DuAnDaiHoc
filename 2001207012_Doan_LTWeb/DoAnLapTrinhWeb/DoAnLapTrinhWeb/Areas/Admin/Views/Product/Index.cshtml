@@ -1,0 +1,104 @@
+﻿@model List<DoAnLapTrinhWeb.Models.Product>
+@{
+    ViewBag.Title = "Product";
+}
+
+<label>Sắp xếp theo:</label>
+<select id="sort" name="sort">
+    <option value="" selected>Chọn:</option>
+    <option value="MatDinh">Mặt định</option>
+    <option value="IdTangDan">Id thấp đến cao</option>
+    <option value="IdGiamDan">Id cao xuống thấp</option>
+    <option value="TenTangDan">Tên thấp đến cao</option>
+    <option value="TenGiamDan">Tên cao xuống thấp</option>
+    <option value="GiaTangDan">Giá thấp đến cao</option>
+    <option value="GiaGiamDan">Giá cao xuống thấp</option>
+</select>
+<a href="/admin/product/create" class="btn btn-primary">Thêm mới 1 sản phẩm</a>
+
+<table class="table productTable">
+    <thead>
+        <tr>
+            <th scope="col">
+                ID
+            </th>
+            <th scope="col">
+                Name
+            </th>
+            <th scope="col">
+                Price
+            </th>
+            <th scope="col">
+                Category
+            </th>
+            <th scope="col">
+                Img
+            </th>
+            <th scope="col">
+                Trend
+            </th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@Html.DisplayFor(row => item.ProductID)</th>
+            <th>@Html.ActionLink(Html.DisplayFor(row => item.ProductName).ToString(),
+               "detail", new { id = item.ProductID, controller = "product", area = "admin"})</th>
+            <th>@Html.DisplayFor(row => item.Price)</th>
+            <th>@Html.DisplayFor(row => item.Category.CategoryName)</th>
+            <th>@Html.DisplayFor(row => item.Img)</th>
+            <th>@Html.DisplayFor(row => item.Trend)</th>
+            <th scope="col"> <a href="/admin/product/edit/@item.ProductID">Edit</a></th>
+            <th scope="col"> <a href="/admin/product/delete/@item.ProductID">Delete</a></th>
+        </tr>
+    }
+
+    <tr>
+        <td colspan="9">
+            @{ 
+                int PrevPage = ViewBag.page - 1;
+                if(PrevPage <= 0)
+                {
+                    PrevPage = 1;
+                }
+                int NextPage = ViewBag.page + 1;
+                if(NextPage > ViewBag.NoOfPage)
+                {
+                    NextPage = ViewBag.NoOfPage;
+                }
+            }
+            <ul class=" pagination justify-content-center">
+                <li class=" page-item">
+                    <a class="page-link" href="/admin/product/index?sort=@ViewBag.sort&page=@PrevPage">Prev</a>
+                </li>
+                @for (int i = 0; i < ViewBag.NoOfPage; i++)
+                {
+                    if (i + 1 == ViewBag.page)
+                    {
+                        <li class=" page-item active">
+                            <a class="page-link" href="/admin/product/index?sort=@ViewBag.sort&page=@(i+1)">@(i + 1)</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class=" page-item">
+                            <a class="page-link" href="/admin/product/index?sort=@ViewBag.sort&page=@(i+1)">@(i + 1)</a>
+                        </li>
+                    }
+                }
+                <li class=" page-item active">
+                    <a class="page-link" href="/admin/product/index?sort=@ViewBag.sort&page=@NextPage">Next</a>
+                </li>
+            </ul>
+        </td>
+    </tr>
+
+</table>
+
+<script>
+    $('#sort').change(function () {
+        const value = $('#sort').val();
+        window.location.href = "/admin/product/index?sort=" + value+"&search=@ViewBag.search";
+    });
+</script>

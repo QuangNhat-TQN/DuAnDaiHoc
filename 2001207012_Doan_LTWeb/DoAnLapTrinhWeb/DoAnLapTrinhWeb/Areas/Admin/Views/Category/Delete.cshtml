@@ -1,0 +1,17 @@
+﻿@model DoAnLapTrinhWeb.Models.Category
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Xóa sản phẩm</h2>
+<form action="/admin/category/delete/@Model.CategoryID" method="post">
+    <input type="hidden" name="Id" value="@Model.CategoryID" />
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <td>@Model.CategoryName</td>
+        </tr>
+    </table>
+    <button type="submit" class="btn btn-danger" style="margin-top: 30px; background-color:red">Delete</button>
+    <a href="/admin/category" class="btn btn-danger" style="margin-top: 30px; background-color:black">Cancel</a>
+</form>
